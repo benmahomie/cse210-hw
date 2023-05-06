@@ -24,20 +24,6 @@ public class Journal
             }
         }
     }
-    public string MorePrompt() 
-    {
-        // ask if user wants another prompt
-        Console.Write("Receive another prompt? (y/N): ");
-        string addPrompt = Console.ReadLine();
-
-        // if user enters anything other than 'y', quit program
-        if (addPrompt != "y")
-        {
-            addPrompt = "quit";
-        }
-
-        return addPrompt;
-    }
 
     public void Display()
     {
@@ -109,7 +95,7 @@ public class Journal
                 AddEntry(newRow);
 
                 // set entry as either "quit" or "" to exit or continue the program
-                entry = MorePrompt();
+                entry = myPrompt.MorePrompt();
             }
         }
     }

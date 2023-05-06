@@ -28,4 +28,19 @@ public class Prompt
 
         return randomPrompt;
     }
+
+    public string MorePrompt() 
+    {
+        // ask if user wants another prompt
+        Console.Write("Receive another prompt? (y/N): ");
+        string addPrompt = Console.ReadLine();
+
+        // if user enters anything other than 'y', quit program
+        if (addPrompt != "y")
+        {
+            addPrompt = "quit";
+        }
+
+        return addPrompt;
+    }
 }

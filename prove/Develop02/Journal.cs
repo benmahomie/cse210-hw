@@ -2,6 +2,7 @@ public class Journal
 {
     string[] headerRow = {"Date", "Prompt", "Entry"};
     string journalPath = "journals\\journal.csv";
+    public List<List<string>> _entriesInMemory = new List<List<string>>();
 
     public void AddEntry(string[] newRow)
     {
@@ -37,28 +38,34 @@ public class Journal
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
-                var values = line.Split('|');
-                foreach (var section in values)
+                if (line != "Date|Prompt|Entry")
                 {
-                    wholeCsv.Add(section);
-                }
-                wholeCsv.Remove("Date");
-                wholeCsv.Remove("Prompt");
-                wholeCsv.Remove("Entry");
-                int counter = 0;
-                foreach (var i in wholeCsv)
-                {
-                    Console.WriteLine(i);
-                    // space out entries by pseudo floor division
-                    counter += 1;
-                    if ((counter - 3) == 0)
+                    string[] values = line.Split('|');
+                    List<string> list = values.ToList();
+                    int counter = 0;
+                    foreach (var i in list)
                     {
-                        Console.WriteLine("");
-                        counter = 0;
+                        Console.WriteLine(i);
+                        // space out entries by pseudo floor division
+                        counter += 1;
+                        if ((counter - 3) == 0)
+                        {
+                            Console.WriteLine("");
+                            counter = 0;
+                        }
                     }
                 }
             }
             reader.Close();
+            // also print entries from this session in memory
+            foreach(var line in _entriesInMemory)
+            {
+                foreach(var substring in line)
+                {
+                    Console.WriteLine(substring);
+                }
+                Console.WriteLine("");
+            }
         }
         else 
         {
@@ -68,17 +75,16 @@ public class Journal
 
     public void MakeEntry()
     {
-        DateTime date = DateTime.Now;
-        string dateString = DateTime.Now.ToString("dddd - dd MMMM yyyy");
-
-        // define entry, and get Prompt and Journal objects
+        // define entry, and get Prompt object
         string entry = "";
         Prompt myPrompt = new Prompt();
 
-        Console.WriteLine(dateString);
-
         while (entry != "quit")
         {
+            DateTime date = DateTime.Now;
+            string dateString = DateTime.Now.ToString("dddd - dd MMMM yyyy");
+            Console.WriteLine(dateString);
+
             // print prompt
             string prompt = myPrompt.GetRandomPrompt();
             Console.WriteLine(prompt);
@@ -91,10 +97,11 @@ public class Journal
                 // format newRow to pass to csv
                 string[] newRow = {dateString, prompt, entry};
 
-                // add the current entry to the csv file
-                AddEntry(newRow);
+                // add the current entry to the entry list of lists
+                List<string> newRowList = newRow.ToList();
+                _entriesInMemory.Add(newRowList);
 
-                // set entry as either "quit" or "" to exit or continue the program
+                // set entry as "quit" or "" respectively to exit or continue the program
                 entry = myPrompt.MorePrompt();
             }
         }

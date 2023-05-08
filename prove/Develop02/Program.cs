@@ -8,6 +8,7 @@ class Program
     {        
         Journal myJournal = new Journal();
 
+        Console.WriteLine("");
         Console.WriteLine("  __  __");
         Console.WriteLine(" |  \\/  |");
         Console.WriteLine(" | \\  / |  ___  _ __   _   _ ");
@@ -42,6 +43,15 @@ class Program
 
                 if (exit != "n")
                 {
+                    Console.WriteLine("Save recorded entries? (Y/n)");
+                    string save = Console.ReadLine();
+                    if (save != "n")
+                    {
+                        foreach(var entryList in myJournal._entriesInMemory)
+                        {
+                            myJournal.AddEntry(entryList.ToArray());
+                        }
+                    }
                     Console.WriteLine("Exiting program..."); 
                     loop = false;                  
                 }

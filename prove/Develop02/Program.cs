@@ -50,6 +50,7 @@ class Program
                         foreach(var entryList in myJournal._entriesInMemory)
                         {
                             myJournal.AddEntry(entryList.ToArray());
+                            Console.WriteLine("Entries saved.");
                         }
                     }
                     Console.WriteLine("Exiting program..."); 

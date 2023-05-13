@@ -1,25 +1,25 @@
 public class Journal
 {
-    string[] headerRow = {"Date", "Prompt", "Entry"};
-    string journalPath = "journals\\journal.csv";
+    string[] _headerRow = {"Date", "Prompt", "Entry"};
+    string _journalPath = "journals\\journal.csv";
     public List<List<string>> _entriesInMemory = new List<List<string>>();
 
     public void AddEntry(string[] newRow)
     {
-        if (!File.Exists(journalPath))
+        if (!File.Exists(_journalPath))
         {
-            Console.WriteLine($"\nNo file called '{journalPath}'");
-            using (StreamWriter sw = File.AppendText(journalPath))
+            Console.WriteLine($"\nNo file called '{_journalPath}'");
+            using (StreamWriter sw = File.AppendText(_journalPath))
             {
-                sw.WriteLine(string.Join("|", headerRow));
+                sw.WriteLine(string.Join("|", _headerRow));
             }
-            Console.WriteLine($"Created file path '{journalPath}'");
+            Console.WriteLine($"Created file path '{_journalPath}'");
             Console.WriteLine("");
         }
 
         else
         {
-            using (StreamWriter sw = File.AppendText(journalPath))
+            using (StreamWriter sw = File.AppendText(_journalPath))
             {
                 sw.WriteLine(string.Join("|", newRow));
             }
@@ -30,10 +30,10 @@ public class Journal
     {
         Console.WriteLine("");
         StreamReader reader = null;
-        if (File.Exists(journalPath))
+        if (File.Exists(_journalPath))
         {
-            reader = new StreamReader(File.OpenRead(journalPath));
-            List<string> wholeCsv = new List<string>();
+            reader = new StreamReader(File.OpenRead(_journalPath));
+            // List<string> wholeCsv = new List<string>();
             List<string> headerSection = new List<string>();
             while (!reader.EndOfStream)
             {
@@ -69,7 +69,7 @@ public class Journal
         }
         else 
         {
-            Console.WriteLine($"{journalPath} could not be found.");
+            Console.WriteLine($"{_journalPath} could not be found.");
         }
     }
 

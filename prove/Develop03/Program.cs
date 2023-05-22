@@ -1,9 +1,5 @@
-using System;
+// Add 3 scriptures
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello Develop03 World!");
-    }
-}
+Reference godSoLoved = new Reference("John", 3, 16, 17);
+Reference jesusWept = new Reference("John", 11, 35);
+Reference nehpisCourage = new Reference("1 Nephi", 3, 7);

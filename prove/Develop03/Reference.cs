@@ -1,33 +1,38 @@
 public class Reference {
 
-    private List<string> _books = new List<string>();
-    private List<int> _chapters = new List<int>();
-    private List<int> _verse = new List<int>();
-    private List<int> _endVerse = new List<int>();
+    private string _book;
+    private int _chapter;
+    private int _verse;
+    private int _endVerse = 0;
 
     public Reference(string book, int chapter, int verse) {
-        _books.Add(book);
-        _chapters.Add(chapter);
-        _verse.Add(verse);        
+        _book = book;
+        _chapter = chapter;
+        _verse = verse;        
     }
 
     public Reference(string book, int chapter, int verse, int endVerse) {
-        _books.Add(book);
-        _chapters.Add(chapter);
-        _verse.Add(verse);
-        _endVerse.Add(endVerse);        
+        _book = book;
+        _chapter = chapter;
+        _verse = verse;
+        _endVerse = endVerse;        
     }
 
-    public string GetBook(string entry) {
-        return entry;
+    public string GetBook() {
+        return _book;
     }
 
-    public int GetChapter(int entry) {
-        return entry;
+    public int GetChapter() {
+        return _chapter;
     }
 
-    public string GetVerse(string entry) {
-        return entry;
+    public string GetVerse() {
+        if (_endVerse == 0) {
+            return $"{_verse}";
+        }
+        else {
+            return $"{_verse}-{_endVerse}";
+        }
     }
 
 }

@@ -1,53 +1,47 @@
 public class Scripture {
 
     private Reference _reference;
-    private string[] _textAsList;
-    private List<int> _hiddenIndex = new List<int>();
-    private Random _random = new Random();
+    private Word _word;
+    private int _wordsLeft = 1; //default is one so program doesn't immediately end from <= 0 comaprison
 
-    public Scripture(Reference reference, string text) {
+    public Scripture(Reference reference, Word words) {
         _reference = reference;
-        _textAsList = text.Split(' ');
-        for (int i = 0; i < _textAsList.Length; i++) {
-            _hiddenIndex.Add(i);
-        }
-    }
-
-    private int GetRandomIndex(string[] textList) {
-        int randomIndex = _random.Next(0, textList.Length);
-        return randomIndex;
-    }
-
-    private void HideWords(int wordNum) {
-        for (int i = 0; i < wordNum; i++) {
-            int randomIndex = GetRandomIndex(_hiddenIndex);
-            _textAsList[randomIndex] = "_";
-        }
-        if (_hiddenIndex.Length != _textAsList.Length) {
-            PresentScripture();
-        }
-        else {
-            Console.WriteLine("All lines blank!");
-        }
+        _word = words;
     }
 
     public void PresentScripture() {
         Console.Clear();
-        Console.WriteLine($"{_reference.GetBook()} {_reference.GetChapter()}:{_reference.GetVerse()}");
-        foreach (string word in _textAsList) {
-            Console.Write($"{word} ");
-        };
+        if (_wordsLeft <= 0) {
+            Console.WriteLine(_reference.RenderReference());
+            _word.RenderWords();
+            Console.WriteLine();
+            Console.WriteLine("All lines are blank!");
+            Console.Write("Press Enter to move on, or type 'restart' to restart: ");
+            var restartOrQuit = Console.ReadLine();
 
-        Console.Write("Press Enter to continue, or type 'quit': ");
-        var enterOrQuit = Console.ReadLine();
-
-        if (enterOrQuit == "quit") {
-            Console.WriteLine("Quitting...");
-            Environment.Exit(0);
+            if (restartOrQuit == "restart") {
+                _word.Restart();
+                _wordsLeft = 1;
+                PresentScripture();
+            }
         }
+
         else {
-            HideWords(5);
+            // Print reference
+            Console.WriteLine(_reference.RenderReference());
+            // Print modified scripture verse word by word, return true or false for isAllBlanks
+            _word.RenderWords();
+            Console.Write("Press Enter to continue, or type 'quit': ");
+            var enterOrQuit = Console.ReadLine();
+
+            if (enterOrQuit == "quit") {
+                Console.WriteLine("Quitting...");
+                Environment.Exit(0);
+            }
+            else {
+                _wordsLeft = _word.HideWords(3);
+                PresentScripture();
+            }
         }
     }
-    
 }

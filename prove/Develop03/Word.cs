@@ -1,24 +1,55 @@
 public class Word {
+    private List<string> _textAsListOriginal;
+    private List<string> _textAsList;
+    private List<int> _possibleIndices;
+    private int _wordsHidden = 0;
+    private Random _random = new Random();
 
-    List<string> _words = new List<string>();
-
-    public Word(string words) {
-        _words.Add(words);
+    public Word(string text) {
+        string[] words = text.Split(' ');
+        _textAsListOriginal = new List<string>(words);
+        _textAsList = _textAsListOriginal.ToList();
+        _possibleIndices = Enumerable.Range(0, _textAsListOriginal.Count()).ToList();
+    }
+    private string GetRandomWord(int randomIndex) {
+        string randomWord = _textAsList[randomIndex];
+        return randomWord;
+    }
+    private int GetRandomIndex() {
+        int index = _random.Next(0, _possibleIndices.Count());
+        int randomIndex = _possibleIndices[index];
+        _possibleIndices.RemoveAt(index);
+        return randomIndex;
     }
 
-    public string Hide() {
-        return "_ _ _ _";
+    public int HideWords(int wordNum) {
+        if ((_textAsList.Count() - _wordsHidden) < wordNum) {
+            wordNum = _textAsList.Count() - _wordsHidden;
+        }
+        for (int i = 0; i < wordNum; i++) {
+            int randomIndex = GetRandomIndex();
+            string randomWord = GetRandomWord(randomIndex);
+            string blankedWord = "";
+
+            for (int a = 0; a < randomWord.Length; a++) {
+                blankedWord += "_";
+            }
+
+            _textAsList[randomIndex] = blankedWord;
+        }
+        _wordsHidden += wordNum;
+        return _textAsList.Count() - _wordsHidden;
     }
 
-    public string Show() {
-        return "word word word";
+    public void RenderWords() {
+        foreach (string word in _textAsList) {
+            Console.Write($"{word} ");
+        }
     }
 
-    public string Hidden() {
-        return "hiddenword hiddenword hiddenword";
-    }
-
-    public string GetRenderedText() {
-        return "word word _ _ _ _ word";
+    public void Restart() {
+        _wordsHidden = 0;
+        _textAsList = _textAsListOriginal.ToList();
+        _possibleIndices = Enumerable.Range(0, _textAsListOriginal.Count()).ToList();
     }
 }

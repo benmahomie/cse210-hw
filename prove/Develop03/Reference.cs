@@ -18,21 +18,25 @@ public class Reference {
         _endVerse = endVerse;        
     }
 
-    public string GetBook() {
+    private string GetBook() {
         return _book;
     }
 
-    public int GetChapter() {
+    private int GetChapter() {
         return _chapter;
     }
 
-    public string GetVerse() {
+    private string GetVerse() {
         if (_endVerse == 0) {
             return $"{_verse}";
         }
         else {
             return $"{_verse}-{_endVerse}";
         }
+    }
+
+    public string RenderReference() {
+        return $"{GetBook()} {GetChapter()}:{GetVerse()}";
     }
 
 }

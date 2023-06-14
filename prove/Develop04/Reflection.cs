@@ -1,7 +1,7 @@
 public class Reflection : Activity {
     
 
-    public void main() {
+    public void prompt() {
         
     }
 }

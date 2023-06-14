@@ -1,7 +1,7 @@
 public class Listing : Activity {
     
 
-    public void main() {
+    public void prompt() {
         
     }
 }

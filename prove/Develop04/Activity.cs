@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Threading;
-
 public class Activity {
 
     public void Menu() {
@@ -14,42 +10,20 @@ public class Activity {
         int choice = int.Parse(Console.ReadLine());
         if (choice == 1) {
             Breathing breathing = new Breathing();
-            Stopwatch breathstopwatch = new Stopwatch();
-            breathstopwatch.Start();
-            breathing.main();
-            breathstopwatch.Stop();
-            TimeSpan ts = breathstopwatch.Elapsed;
-            string elapsedBreathTime = MakeDateTime(ts);
+            breathing.prompt();
         }
         if (choice == 2) {
             Listing listing = new Listing();
-            Stopwatch liststopwatch = new Stopwatch();
-            liststopwatch.Start();
-            listing.main();
-            liststopwatch.Stop();
-            TimeSpan ts = liststopwatch.Elapsed;
-            string elapsedListTime = MakeDateTime(ts);
+            listing.prompt();
         }
         if (choice == 3) {
             Reflection reflection = new Reflection();
-            Stopwatch reflectstopwatch = new Stopwatch();
-            reflectstopwatch.Start();
-            reflection.main();
-            reflectstopwatch.Stop();
-            TimeSpan ts = reflectstopwatch.Elapsed;
-            string elapsedReflectTime = MakeDateTime(ts);
+            reflection.prompt();
         }
         else {
-            Console.WriteLine($"\"{choice}\" is not a valid option.");
+            // Console.WriteLine($"\"{choice}\" is not a valid option.");
             Menu();
         }
-    }
-
-    public string MakeDateTime(TimeSpan ts) {
-        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds / 10);
-        return elapsedTime;
     }
 
     public void Loading(int seconds) {

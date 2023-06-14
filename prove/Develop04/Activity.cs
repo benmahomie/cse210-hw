@@ -1,29 +1,54 @@
 public class Activity {
+    private bool _firstRun = true;
 
     public void Menu() {
-        Console.WriteLine("Welcome to the Mindfulness App.");
-        Console.WriteLine("Please enter a number to choose an activity:");
+        if (_firstRun == true) {
+            Console.WriteLine("Welcome to the Mindfulness App.");
+            Console.WriteLine("Please enter a number to choose an activity:");
+            _firstRun = false;
+        }
         Console.WriteLine("1. Breathing");
         Console.WriteLine("2. Listing");
         Console.WriteLine("3. Reflection");
+        Console.WriteLine("4. Quit");
 
-        int choice = int.Parse(Console.ReadLine());
-        if (choice == 1) {
-            Breathing breathing = new Breathing();
-            breathing.prompt();
-        }
-        if (choice == 2) {
-            Listing listing = new Listing();
-            listing.prompt();
-        }
-        if (choice == 3) {
-            Reflection reflection = new Reflection();
-            reflection.prompt();
+        string input = Console.ReadLine();
+    
+        if (int.TryParse(input, out int choice)) {
+
+            switch (choice) {
+
+                case 1: 
+                    Breathing breathing = new Breathing();
+                    breathing.prompt();
+                    break;
+
+                case 2: 
+                    Listing listing = new Listing();
+                    listing.prompt();
+                    break;
+
+                case 3:
+                    Reflection reflection = new Reflection();
+                    reflection.prompt();
+                    break;
+
+                case 4: 
+                    Console.Write("Quitting...");
+                    Loading(2);
+                    return;
+
+                default:
+                    Console.WriteLine($"Invalid choice '{choice}'. Please enter a valid integer choice (1, 2, 3, or 4).");
+                    break;
+            }
         }
         else {
-            // Console.WriteLine($"\"{choice}\" is not a valid option.");
-            Menu();
+            Console.WriteLine("Invalid input. Please enter a valid integer choice (1, 2, 3, or 4).");
         }
+
+        Console.WriteLine();
+        Menu();
     }
 
     public void Loading(int seconds) {

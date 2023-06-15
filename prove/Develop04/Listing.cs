@@ -12,10 +12,9 @@ public class Listing : Activity {
     }
 
     public void prompt() {
-        Console.WriteLine("\nThis activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.\n");
+        _timeLimit = SetTimeLimit();
 
-        Console.WriteLine("How many seconds do you want to list thoughts for?");
-        int seconds = int.Parse(Console.ReadLine());
+        Console.WriteLine("\nThis activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.\n");
 
         int index = random.Next(_promptsList.Count);
         string prompt = _promptsList[index];
@@ -25,11 +24,25 @@ public class Listing : Activity {
         Countdown(5);
         Console.WriteLine("Write your thoughts, press Enter after each one.");
         DateTime startTime = DateTime.Now;
-        DateTime futureTime = startTime.AddSeconds(seconds);
+        DateTime futureTime = startTime.AddSeconds(_timeLimit);
         while (DateTime.Now < futureTime) {
-            
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine(); // Move to the next line after the user presses Enter
+                    continue;
+                }
+
+                string entry = key.KeyChar.ToString();
+                entries.Add(entry);
+            }
+        } 
+        Console.WriteLine("Time is up. You entered the following entries:");
+        foreach (string entry in entries)
+        {
+            Console.WriteLine(entry);
         }
-
-
     }
 }

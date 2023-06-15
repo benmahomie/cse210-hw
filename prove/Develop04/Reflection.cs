@@ -25,6 +25,7 @@ public class Reflection : Activity {
         }
     }
     public void prompt() {
+        _timeLimit = SetTimeLimit();
 
         Console.WriteLine("\nThis activity will help you reflect on times in your life when you have shown strength and resilience. \nThis will help you recognize the power you have and how you can use it in other aspects of your life.\n");
         
@@ -41,8 +42,8 @@ public class Reflection : Activity {
             if (questionCount > 9) {
                 questionCount = 9;
             }
-            
-            _totalTime = (questionCount * 10);
+
+            int timeForEach = _timeLimit / questionCount;
         
             while (questionCount > 0) {
                 int index = random.Next(_followUpIndex.Count); // get an integer between 0 and the total number of strings in _followUpIndex - 1
@@ -57,13 +58,13 @@ public class Reflection : Activity {
                 Console.WriteLine(randomFollowUp);
 
                 questionCount -= 1;
-                Loading(10); //wait a few seconds before next prompt
+                Loading(timeForEach); //wait a few seconds before next prompt
             }
         }
         else {
             Console.WriteLine($"Invalid input. Please enter an integer between 1 and {_followUpList.Count}.");
             prompt();
         }
-        Console.WriteLine($"Good job! You did this exercise for {_totalTime} seconds.");
+        Console.WriteLine($"Good job! You did this exercise for {_timeLimit} seconds.");
     }
 }

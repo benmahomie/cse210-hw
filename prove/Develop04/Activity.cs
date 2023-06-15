@@ -1,7 +1,6 @@
 public class Activity {
-    protected DateTime _startTime;
+    protected int _timeLimit;
     private bool _firstRun = true;
-    protected int _totalTime;
 
     public void Menu() {
         if (_firstRun == true) {

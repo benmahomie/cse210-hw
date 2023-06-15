@@ -1,5 +1,7 @@
 public class Activity {
+    protected DateTime _startTime;
     private bool _firstRun = true;
+    protected int _totalTime;
 
     public void Menu() {
         if (_firstRun == true) {
@@ -74,5 +76,11 @@ public class Activity {
             Thread.Sleep(1000);
             Console.Write("\b \b");
         }
+    }
+
+    public int SetTimeLimit() {
+        Console.WriteLine("How long, in seconds, would you like your session to last?");
+        int input = int.Parse(Console.ReadLine());
+        return input;
     }
 }

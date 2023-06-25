@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+
 public class PlayerProfile {
     protected int _score;
     protected int _goalCount;
@@ -30,16 +35,24 @@ public class PlayerProfile {
 
         switch (input) {
             case 1:
-                Goals goal = new Goals();
+                CreateGoal();
                 break;
             case 2:
-                RecordEvent();
+                Console.WriteLine("Which goal are you recording?");
+                for (int i = 0; i < _playerGoalList.Count; i++) {
+                    Console.WriteLine($"{i+1}. {_playerGoalList[i].GetGoalName()}");
+                }
+
+                int goalChoice = (int.Parse(Console.ReadLine())) - 1;
+                _playerGoalList[goalChoice].RecordEvent();
                 break;
             case 3:
-                ShowGoals();
+                for (int i = 0; i < _playerGoalList.Count; i++) {
+                    Console.WriteLine($"{_playerGoalList[i].PrintGoal()}");
+                };
                 break;
             case 4:
-                ShowScore();
+                Console.WriteLine(_score);
                 break;
             case 5:
                 SaveGoals();
@@ -49,5 +62,64 @@ public class PlayerProfile {
                 break;
             }
         }
+    }
+
+    public void CreateGoal() {
+        Console.WriteLine("What type of goal will you create?\n1. Simple Goal (One and Done)\n2. Repeating Goal (Never Ends)\n3. Checklist Goal (Repeating Activity with Bonuses on Intervals)");
+        int input = int.Parse(Console.ReadLine());
+
+        switch (input) {
+            case 1:
+                Console.WriteLine("--Simple Goal--");
+
+                Console.WriteLine("Enter the Simple Goal title: ");
+                string simpleGoalTitle = Console.ReadLine();
+
+                Console.WriteLine("Enter the point value of the Simple Goal: ");
+                int simpleGoalValue = int.Parse(Console.ReadLine());
+
+                Goals simpleGoal = new SimpleGoal(simpleGoalTitle, simpleGoalValue);
+                _playerGoalList.Add(simpleGoal);
+                _goalCount += 1;
+                break;
+            case 2:
+                Console.WriteLine("--Repeating Goal--");
+                
+                Console.WriteLine("Enter the Repeating Goal title: ");
+                string repeatingGoalTitle = Console.ReadLine();
+
+                Console.WriteLine("Enter the point value of the Repeating Goal: ");
+                int repeatingGoalValue = int.Parse(Console.ReadLine());
+
+                RepeatingGoal repeatingGoal = new RepeatingGoal(repeatingGoalTitle, repeatingGoalValue);
+                _playerGoalList.Add(repeatingGoal);
+                _goalCount += 1;
+                break;
+            case 3:
+                Console.WriteLine("--Checklist Goal--");
+
+                Console.WriteLine("Enter the Checklist Goal title: ");
+                string intervalGoalTitle = Console.ReadLine();
+
+                Console.WriteLine("Enter the point value of the Checklist Goal: ");
+                int intervalGoalValue = int.Parse(Console.ReadLine());
+
+                IntervalGoal intervalGoal = new IntervalGoal(intervalGoalTitle, intervalGoalValue);
+                intervalGoal.SetRepetitionAndBonus();
+
+                _playerGoalList.Add(intervalGoal);
+                _goalCount += 1;
+                break;
+            default:
+                Console.WriteLine($"'{input}' is not a valid choice.");
+                break;
+            }
+        }
+
+    public void SaveGoals() {
+        string jsonString = JsonSerializer.Serialize(_playerGoalList);
+        File.WriteAllText("goals.json", jsonString);
+
+        Console.WriteLine("JSON file saved.");
     }
 }

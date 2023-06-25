@@ -5,8 +5,8 @@ using System.Text.Json;
 
 public class PlayerProfile {
     protected int _score;
-    protected int _goalCount;
-    protected List<Goals> _playerGoalList;
+    protected int _goalCount = 0;
+    protected List<Goals> _playerGoalList = new List<Goals>();
     private string _playerName;
     private string _playerFavFood;
 

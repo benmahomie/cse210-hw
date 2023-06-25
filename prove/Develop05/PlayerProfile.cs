@@ -49,7 +49,7 @@ public class PlayerProfile {
                 };
                 break;
             case 4:
-                Console.WriteLine(_score);
+                DisplayScore();
                 break;
             case 5:
                 SaveGoals();

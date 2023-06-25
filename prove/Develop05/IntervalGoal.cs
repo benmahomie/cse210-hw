@@ -11,15 +11,15 @@ public class IntervalGoal : Goals {
     }
 
     public override void RecordEvent() {
-        UpdateGoalCompletion();
-        if (_timesRepeated >= _interval) {
+        if (_timesRepeated > _interval) {
             _timesRepeated = 1;
-            _goalComplete = $"{_timesRepeated}/{_interval}";
             _score += _bonus;
         }
         else {
             _score += _goalValue;
         }
+        UpdateGoalCompletion();
+        _goalComplete = $"{_timesRepeated}/{_interval}";
     }
     
     public void SetRepetitionAndBonus() {

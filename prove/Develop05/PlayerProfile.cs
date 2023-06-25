@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 public class PlayerProfile {
-    protected int _score;
+    protected int _score = 0;
     protected int _goalCount = 0;
     protected List<Goals> _playerGoalList = new List<Goals>();
     private string _playerName;
@@ -40,7 +37,7 @@ public class PlayerProfile {
             case 2:
                 Console.WriteLine("Which goal are you recording?");
                 for (int i = 0; i < _playerGoalList.Count; i++) {
-                    Console.WriteLine($"{i+1}. {_playerGoalList[i].GetGoalName()}");
+                    Console.WriteLine($"{i+1}. {_playerGoalList[i].GetGoalName()}\n");
                 }
 
                 int goalChoice = (int.Parse(Console.ReadLine())) - 1;
@@ -48,7 +45,7 @@ public class PlayerProfile {
                 break;
             case 3:
                 for (int i = 0; i < _playerGoalList.Count; i++) {
-                    Console.WriteLine($"{_playerGoalList[i].PrintGoal()}");
+                    Console.WriteLine($"{_playerGoalList[i].PrintGoal()}\n");
                 };
                 break;
             case 4:

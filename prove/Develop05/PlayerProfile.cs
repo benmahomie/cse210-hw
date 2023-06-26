@@ -1,15 +1,21 @@
 using System.Text.Json;
-
+using System.IO;
 public class PlayerProfile {
     protected int _score = 0;
     protected int _goalCount = 0;
     protected List<Goals> _playerGoalList = new List<Goals>();
     private string _playerName;
     private string _playerFavFood;
+    private string _goalFilePath;
 
     public void SetPlayerDetails() {
         Console.WriteLine("What is your name?");
         _playerName = Console.ReadLine();
+
+        string path = $"{_playerName}_goals";
+        CreateDirectory(path);
+        _goalFilePath = $"{path}\\goals.txt";
+
         Console.WriteLine("What is your favorite food?");
         _playerFavFood = Console.ReadLine();
     }
@@ -113,10 +119,30 @@ public class PlayerProfile {
             }
         }
 
-    public void SaveGoals() {
-        string jsonString = JsonSerializer.Serialize(_playerGoalList);
-        File.WriteAllText("goals.json", jsonString);
+    private void CreateDirectory(string path)
+    {
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        else
+        {
+            Console.WriteLine($"Welcome back, {_playerName}.");
+        }
+        Console.WriteLine($"Your goals will be saved in: {path}");
+    }
 
-        Console.WriteLine("JSON file saved.");
+    public void SaveGoals() {
+        List<string> txtStringList = new List<string>();
+        for (int i = 0; i < _playerGoalList.Count; i++) {
+            txtStringList.Add(_playerGoalList[i].PrintGoal());
+        }
+        using (StreamWriter file = new StreamWriter(_goalFilePath, true)) {
+            foreach (string txtString in txtStringList) {
+                file.WriteLine($"{txtString}\n");
+            }
+        }
+
+        Console.WriteLine("TXT file saved.");
     }
 }

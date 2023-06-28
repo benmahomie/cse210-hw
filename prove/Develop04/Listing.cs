@@ -1,6 +1,6 @@
 public class Listing : Activity {
     private List<string> _promptsList = new List<string>();
-    List<string> entries = new List<string>();
+    List<string> entriesString = new List<string>();
     private Random random = new Random();
 
     public Listing() {
@@ -25,22 +25,33 @@ public class Listing : Activity {
         Console.WriteLine("Write your thoughts, press Enter after each one.");
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(_timeLimit);
+
+        List<string> entries = new List<string>();
         while (DateTime.Now < futureTime) {
+            string entry = "";
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    for (int i = 0; i < entries.Count; i++) {
+                        entry += entries[i];
+                    }
+                    entriesString.Add(entry);
+                    // Console.WriteLine($"\"{entry}\" added to entriesString");
+                    entry = "";
+                    entries = new List<string>();
+
                     Console.WriteLine(); // Move to the next line after the user presses Enter
                     continue;
                 }
 
-                string entry = key.KeyChar.ToString();
-                entries.Add(entry);
+                entries.Add(key.KeyChar.ToString());
+                // Console.WriteLine($"\n{key.KeyChar.ToString()} added to entries");
             }
         } 
         Console.WriteLine("Time is up. You entered the following entries:");
-        foreach (string entry in entries)
+        foreach (string entry in entriesString)
         {
             Console.WriteLine(entry);
         }

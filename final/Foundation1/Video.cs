@@ -16,10 +16,12 @@ public class Video {
     }
 
     public void PrintAllComments() {
-        Console.WriteLine($"\n\"{_title}\" by {_author} ({_lengthInSeconds} seconds):");
+        Console.WriteLine("=============================================");
+        Console.WriteLine($"\n\"{_title}\" by {_author} ({_lengthInSeconds} seconds):\n");
         for (int i = 0; i < _commentList.Count; i++) {
             _commentList[i].PrintComment();
             Console.WriteLine();
         }
+        Console.WriteLine("=============================================");
     }
 }

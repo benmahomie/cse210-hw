@@ -13,8 +13,7 @@ boxProduct.SetQuantity(500); // Set boxProduct quantity
 Product lampProduct = new Product("Floor Lamp", 0008320, 14.99); 
 lampProduct.SetQuantity(15); // Set lampProduct quantity
 // 3. Create reassuranceBucketProduct product
-Product reassuranceBucketProduct = new Product("Reassurance Bucket", 0000001, 999.99); 
-reassuranceBucketProduct.SetQuantity(1); // Set reassuranceBucketProduct quantity
+Product reassuranceBucketProduct = new Product("Reassurance Bucket", 0000001, 999.99);
 
 // Create a customer order for "Joe Smith"
 Order joeSmithOrder = new Order(joeSmith); 

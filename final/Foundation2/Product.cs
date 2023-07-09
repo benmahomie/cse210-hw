@@ -2,7 +2,7 @@ public class Product {
     private string _name;
     private int _productId;
     private double _price;
-    private int _quantity;
+    private int _quantity = 1;
 
     public Product(string name, int productId, double price) {
         _name = name;

@@ -6,5 +6,5 @@ List<Activity> activityList = new List<Activity>{running, bicycling, swimming};
 
 foreach (Activity activity in activityList) {
     activity.GetSummary();
-    Console.WriteLine("o");
+    Console.WriteLine();
 }

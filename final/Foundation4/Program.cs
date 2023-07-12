@@ -1,9 +1,10 @@
-using System;
+Running running = new Running("18 Jul 2023", 20, 5.0);
+Bicycling bicycling = new Bicycling("19 Jul 2023", 40, 7.5);
+Swimming swimming = new Swimming("20 Jul 2023", 30, 100);
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello Foundation4 World!");
-    }
+List<Activity> activityList = new List<Activity>{running, bicycling, swimming};
+
+foreach (Activity activity in activityList) {
+    activity.GetSummary();
+    Console.WriteLine("o");
 }
